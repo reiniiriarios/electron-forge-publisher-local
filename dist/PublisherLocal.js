@@ -54,17 +54,17 @@ class PublisherLocal extends _publisherBase.default {
       const artifacts = perReleaseArtifacts[releaseName];
 
       let copyPath = _path.default.join(config.directory, releaseName);
-      await (0, _asyncOra.asyncOra)(`Searching for target release: ${releaseName}`, async () => {
+      await (0, _asyncOra.asyncOra)(`Copying to local publish directory: ${releaseName}`, async () => {
         if (!_fs.default.existsSync(copyPath)) {
           _fs.default.mkdirSync(copyPath);
         }
       });
 
       let ymlfiles = [];
-      let uploaded = 0;
-      await (0, _asyncOra.asyncOra)(`Copying Artifacts ${uploaded} to ${releaseName}`, async uploadSpinner => {
+      let copied = 0;
+      await (0, _asyncOra.asyncOra)(`Copying artifacts [${copied}] to ${copyPath}`, async uploadSpinner => {
         const updateSpinner = () => {
-          uploadSpinner.text = `Copying Artifacts ${uploaded} to ${releaseName}`;
+          uploadSpinner.text = `Copying artifacts [${copied}] to ${copyPath}`;
         };
 
         const flatArtifacts = [];
@@ -75,7 +75,7 @@ class PublisherLocal extends _publisherBase.default {
 
         await Promise.all(flatArtifacts.map(async artifactPath => {
           const done = () => {
-            uploaded += 1;
+            copied += 1;
             updateSpinner();
           };
 
@@ -96,8 +96,18 @@ class PublisherLocal extends _publisherBase.default {
             });
           })(artifactPath);
 
+          let artifactNewPath = _path.default.join(copyPath, artifactName);
+
+          _fs.default.copyFileSync(artifactPath, artifactNewPath);
+
+          var url = artifactNewPath.replace(/\\/g, '/');
+          // Windows drive letter must be prefixed with a slash
+          if (url[0] !== '/') {
+            url = '/' + url;
+          }
+
           ymlfiles.push({
-            url: _path.default.join(releaseName, artifactName),
+            url: 'file://' + url,
             sha512: sha512,
             name: artifactName
           });
@@ -106,7 +116,7 @@ class PublisherLocal extends _publisherBase.default {
         }));
       });
 
-      await (0, _asyncOra.asyncOra)(`Copying latest.yml`, async () => {
+      await (0, _asyncOra.asyncOra)(`Writing latest.yml to ${config.directory}`, async () => {
         let latestyml = _yaml.default.dump({
           version: releaseName,
           files: ymlfiles
