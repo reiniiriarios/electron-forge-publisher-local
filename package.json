@@ -1,0 +1,25 @@
+{
+  "name": "electron-forge-publisher-local",
+  "version": "0.1.0",
+  "description": "Local publisher for Electron Forge",
+  "main": "dist/PublisherLocal.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@electron-forge/async-ora": "6.0.0-beta.54",
+    "@electron-forge/publisher-base": "6.0.0-beta.54",
+    "@electron-forge/shared-types": "6.0.0-beta.54",
+    "crypto": "^1.0.1",
+    "js-yaml": "^4.0.0",
+    "lodash": "^4.17.20"
+  },
+  "engines": {
+    "node": ">= 10.0.0"
+  },
+  "author": {
+    "name": "Emma Litwa-Vulcu",
+    "email": "80431903+reiniiriarios@users.noreply.github.com"
+  },
+  "license": "GNU GPL-3.0"
+}
