@@ -11,8 +11,7 @@
     "@electron-forge/publisher-base": "6.0.0-beta.54",
     "@electron-forge/shared-types": "6.0.0-beta.54",
     "crypto": "^1.0.1",
-    "js-yaml": "^4.0.0",
-    "lodash": "^4.17.20"
+    "js-yaml": "^4.0.0"
   },
   "engines": {
     "node": ">= 10.0.0"
@@ -21,5 +20,17 @@
     "name": "Emma Litwa-Vulcu",
     "email": "80431903+reiniiriarios@users.noreply.github.com"
   },
-  "license": "GNU GPL-3.0"
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reiniiriarios/electron-forge-publisher-local.git"
+  },
+  "bugs": {
+    "url": "https://github.com/reiniiriarios/electron-forge-publisher-local/issues"
+  },
+  "homepage": "https://github.com/reiniiriarios/electron-forge-publisher-local",
+  "keywords": [
+    "electron",
+    "electron forge"
+  ]
 }
