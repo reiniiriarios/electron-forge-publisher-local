@@ -9,7 +9,6 @@ require("source-map-support/register");
 
 var _asyncOra = require("@electron-forge/async-ora");
 
-// var _fsExtra = _interopRequireDefault(require("fs-extra"));
 var _fs = _interopRequireDefault(require("fs"));
 var _crypto = _interopRequireDefault(require('crypto'));
 var _yaml = _interopRequireDefault(require('js-yaml'));
@@ -81,6 +80,24 @@ class PublisherLocal extends _publisherBase.default {
 
           const artifactName = _path.default.basename(artifactPath); // eslint-disable-next-line max-len
 
+          if (artifactName == 'RELEASES') {
+            await (0, _asyncOra.asyncOra)(`Writing RELEASES to ${config.directory}`, async () => {
+              let releasesString = _fs.default.readFileSync(artifactPath, 'utf8');
+              let releasesPathed = releasesString.split(/\r?\n/g).map(line => {
+                let parts = line.split(/ /g);
+                let url = _path.default.join(copyPath,parts[1]);
+                url = url.replace(/\\/g, '/');
+                // Windows drive letter must be prefixed with a slash
+                if (url[0] !== '/') {
+                  url = '/' + url;
+                }
+                parts[1] = 'file://' + url;
+                return parts.join(' ');
+              });
+              _fs.default.writeFileSync(_path.default.join(config.directory, 'RELEASES'), releasesPathed.join("\n"), 'utf8');
+            });
+          }
+
           let sha512 = await (async (artifactPath) => {
             return new Promise((resolve, reject) => {
               const hash = _crypto.default.createHash('sha512');
@@ -116,11 +133,12 @@ class PublisherLocal extends _publisherBase.default {
         }));
       });
 
-      await (0, _asyncOra.asyncOra)(`Writing latest.yml to ${config.directory}`, async () => {
+      await (0, _asyncOra.asyncOra)(`Writing latest.yml to both ${config.directory} and ${releaseName}`, async () => {
         let latestyml = _yaml.default.dump({
           version: releaseName,
           files: ymlfiles
         });
+        _fs.default.writeFileSync(_path.default.join(config.directory,releaseName,'latest.yml'), latestyml, 'utf8');
         _fs.default.writeFileSync(_path.default.join(config.directory,'latest.yml'), latestyml, 'utf8');
       });
     }

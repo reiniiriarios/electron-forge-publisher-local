@@ -24,6 +24,16 @@ module.exports = {
 
 Copies all results from make to `/path/to/configured/directory/<version>/` using the version from make results.
 
+Edits `RELEASES`, if present, to have full path and writes to configured directory.
+
+Example edited `RELEASES`:
+
+```
+0000000000000000000000000000000000000000 file:///path/to/1.0.0/YourApp-1.0.0-full.nupkg 00000000
+```
+
+
+
 Creates `/path/to/configured/directory/latest.yml`. Contents include latest version and list of all make artifacts with base64 encoded sha512 hashes.
 
 Example `latest.yml`:
