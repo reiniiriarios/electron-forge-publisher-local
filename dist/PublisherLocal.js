@@ -86,7 +86,7 @@ class PublisherLocal extends _publisherBase.default {
               let releasesString = _fs.default.readFileSync(artifactPath, 'utf8');
               let releasesPathed = releasesString.split(/\r?\n/g).map(line => {
                 let parts = line.split(/ /g);
-                let version = parts[1].replace(/\-(\d\.\d\.\d)\-(?:full|delta)/,'$1');
+                let version = parts[1].replace(/^.*\-(\d\.\d\.\d)\-.*$/,'$1');
                 parts[1] = version + '/' + parts[1];
                 return parts.join(' ');
               });
