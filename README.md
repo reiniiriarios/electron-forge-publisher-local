@@ -1,6 +1,10 @@
 # electron-forge-publisher-local
 Local publisher for Electron Forge
 
+## Installing
+
+`npm install --save-dev electron-forge-publisher-local`
+
 ## Configuration
 
 Example forge.config.js
