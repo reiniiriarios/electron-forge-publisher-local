@@ -80,18 +80,14 @@ class PublisherLocal extends _publisherBase.default {
 
           const artifactName = _path.default.basename(artifactPath); // eslint-disable-next-line max-len
 
+          // TODO: currently only works without deltas
           if (artifactName == 'RELEASES') {
             await (0, _asyncOra.asyncOra)(`Writing RELEASES to ${config.directory}`, async () => {
               let releasesString = _fs.default.readFileSync(artifactPath, 'utf8');
               let releasesPathed = releasesString.split(/\r?\n/g).map(line => {
                 let parts = line.split(/ /g);
-                let url = _path.default.join(copyPath,parts[1]);
-                url = url.replace(/\\/g, '/');
-                // Windows drive letter must be prefixed with a slash
-                if (url[0] !== '/') {
-                  url = '/' + url;
-                }
-                parts[1] = 'file://' + url;
+                let version = parts[1].replace(/\-(\d\.\d\.\d)\-(?:full|delta)/,'$1');
+                parts[1] = version + '/' + parts[1];
                 return parts.join(' ');
               });
               _fs.default.writeFileSync(_path.default.join(config.directory, 'RELEASES'), releasesPathed.join("\n"), 'utf8');

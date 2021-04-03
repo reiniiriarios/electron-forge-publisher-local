@@ -29,7 +29,7 @@ Edits `RELEASES`, if present, to have full path and writes to configured directo
 Example edited `RELEASES`:
 
 ```
-0000000000000000000000000000000000000000 file:///path/to/1.0.0/YourApp-1.0.0-full.nupkg 00000000
+0000000000000000000000000000000000000000 1.0.0/YourApp-1.0.0-full.nupkg 00000000
 ```
 
 
@@ -59,6 +59,3 @@ files:
     name: YourApp-win32-x64-1.0.0.zip
 ```
 
-## To Do
-
-Currently `RELEASES` will copy to each versioned directory rather than being rewritten and copied to the top publish directory. This file really belongs one level up with paths updated.
