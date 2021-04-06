@@ -28,7 +28,7 @@ module.exports = {
 
 Copies all results from make to `/path/to/configured/directory/<version>/` using the version from make results.
 
-Edits `RELEASES`, if present, to have full path and writes to configured directory.
+Edits `RELEASES`, if present, to have path and writes to configured directory.
 
 Example edited `RELEASES`:
 
