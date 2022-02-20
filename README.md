@@ -14,7 +14,7 @@ module.exports = {
       name: 'electron-forge-publisher-local',
       config: {
         directory: 'c:/path/to/local/publish/directory',
-				releasesFilePrefix: 'https://example.com/prefix/for/releases/' /* optional */
+        releasesFilePrefix: 'https://example.com/prefix/for/releases/' /* optional */
       }
     }
   ],
