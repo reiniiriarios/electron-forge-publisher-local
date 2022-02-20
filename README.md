@@ -1,5 +1,9 @@
 # electron-forge-publisher-local
+
+![](https://img.shields.io/npm/dt/electron-forge-publisher-local) ![](https://img.shields.io/badge/license-GPLv3-blue)
+
 Local publisher for Electron Forge
+
 
 ## Configuration
 
