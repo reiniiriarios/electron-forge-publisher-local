@@ -49,6 +49,8 @@ class PublisherLocal extends _publisherBase.default {
       throw new Error('In order to publish locally you must set the "directory" property in your Forge config.');
     }
 
+		const releasesFilePrefix = typeof config.releasesFilePrefix == 'undefined' ? '' : config.releasesFilePrefix;
+
     for (const releaseName of Object.keys(perReleaseArtifacts)) {
       const artifacts = perReleaseArtifacts[releaseName];
 
@@ -80,14 +82,13 @@ class PublisherLocal extends _publisherBase.default {
 
           const artifactName = _path.default.basename(artifactPath); // eslint-disable-next-line max-len
 
-          // TODO: currently only works without deltas
           if (artifactName == 'RELEASES') {
             await (0, _asyncOra.asyncOra)(`Writing RELEASES to ${config.directory}`, async () => {
               let releasesString = _fs.default.readFileSync(artifactPath, 'utf8');
               let releasesPathed = releasesString.split(/\r?\n/g).map(line => {
                 let parts = line.split(/ /g);
                 let version = parts[1].replace(/^.*\-(\d\.\d\.\d)\-.*$/,'$1');
-                parts[1] = version + '/' + parts[1];
+                parts[1] = releasesFilePrefix + version + '/' + parts[1];
                 return parts.join(' ');
               });
               _fs.default.writeFileSync(_path.default.join(config.directory, 'RELEASES'), releasesPathed.join("\n"), 'utf8');

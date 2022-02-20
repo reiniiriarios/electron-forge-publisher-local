@@ -1,10 +1,6 @@
 # electron-forge-publisher-local
 Local publisher for Electron Forge
 
-## Installing
-
-`npm install --save-dev electron-forge-publisher-local`
-
 ## Configuration
 
 Example forge.config.js
@@ -17,7 +13,8 @@ module.exports = {
     {
       name: 'electron-forge-publisher-local',
       config: {
-        directory: 'c:/path/to/local/publish/directory'
+        directory: 'c:/path/to/local/publish/directory',
+				releasesFilePrefix: 'https://example.com/prefix/for/releases/' /* optional */
       }
     }
   ],
@@ -28,12 +25,16 @@ module.exports = {
 
 Copies all results from make to `/path/to/configured/directory/<version>/` using the version from make results.
 
-Edits `RELEASES`, if present, to have path and writes to configured directory.
+Edits `RELEASES`, if present, to have full path and writes to configured directory.
 
 Example edited `RELEASES`:
 
 ```
 0000000000000000000000000000000000000000 1.0.0/YourApp-1.0.0-full.nupkg 00000000
+```
+
+```
+0000000000000000000000000000000000000000 https://example.com/prefix/for/releases/1.0.0/YourApp-1.0.0-full.nupkg 00000000
 ```
 
 
